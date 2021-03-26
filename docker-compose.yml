@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  server:
+    build: server/
+    command: python ./server.py
+#    expose:
+#      - "8079"
+    ports:
+      - 79:79
+
+  broker:
+    build: broker/
+    command: python ./broker.py
+    expose:
+      - "80"
+    ports:
+      - 80:80
+    depends_on:
+      - server
+
+#   client:
+#     build: client/
+#     command: python ./client.py
+# #    network_mode: host
+#     depends_on:
+#       - broker
+
+networks:
+  default:
+    external:
+      name: board-app
